@@ -1,17 +1,17 @@
-# Target Watchlist: AI Infra, Semi, Cloud & Core Blue-chips
+# 모니터링 대상 종목군: AI 하드웨어, 클라우드, 파운드리 등 핵심 우량주
 tickers:
   - symbol: NVDA
-    name: NVIDIA
-    category: AI Chips / Hardware
+    name: 엔비디아 (NVIDIA)
+    category: AI 반도체 / 하드웨어
   - symbol: MSFT
-    name: Microsoft
-    category: Cloud / Software
+    name: 마이크로소프트 (Microsoft)
+    category: 클라우드 / 소프트웨어
   - symbol: GOOGL
-    name: Alphabet
-    category: Model / Platform
+    name: 알파벳 (Alphabet)
+    category: AI 모델 / 플랫폼
   - symbol: TSM
     name: TSMC
-    category: Foundry
+    category: 파운드리
   - symbol: ASML
     name: ASML
-    category: Equipment
+    category: 반도체 장비

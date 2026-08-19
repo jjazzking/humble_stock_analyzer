@@ -1,19 +1,24 @@
-# AI Stock Accumulation Dashboard Rules
+# AI 주식 눌림목 분할매수 대시보드 개발 규칙
 
-## Project Objective
-- Build a clear, unopinionated dashboard for accumulating solid AI & tech stocks during pullbacks (눌림목).
-- Strict separation: 
-  - Phase 1: Objective Fundamental & Narrative collection
-  - Phase 2: Simple Technical pullback metrics
+## 프로젝트 목표
+- AI 시대 수혜주 및 우량 기술주의 객관적 지표를 기반으로, 단기 눌림목(조정 구간)에서 분할 매수할 수 있도록 돕는 대시보드 구축.
+- 단계별 명확한 분리:
+  - 1단계: 객관적 펀더멘털 및 투자 내러티브 수집
+  - 2단계: 단순 기술적 지표 기반 눌림목 모니터링
 
-## Absolute Constraints (Strict Guardrails)
-1. **NO Arbitrary Scoring / Subjective Rating:** NEVER create proprietary "scores" (e.g. 78/100, "Bullish Rank", "AI Grade"). Output pure, verified raw metrics and mathematical technical indicators only.
-2. **Data Integrity Over Everything:** If a data point is missing or unverified, mark as `null` or `N/A`. Do not guess or interpolate.
-3. **Extensibility First:** Metrics/indicators are modular. Placeholders are designed for future user additions.
-4. **Token Optimization:** Always generate clean, modular code targeting specific files in `src/`. Do not re-explain architecture.
+## 절대 원칙 및 금지 사항 (Strict Constraints)
+1. **임의 점수 산출(Scoring) 및 등급 부여 절대 금지:**
+   - "매수 점수 80점", "A등급", "자체 상승지수" 같은 주관적이거나 가공된 점수를 절대 만들지 않는다.
+   - 오직 검증된 원천 수치(재무 데이터)와 수학적 기술 지표(이격도, 고점 대비 낙폭 등)만 정직하게 출력한다.
+2. **데이터 정합성(무결성) 최우선:**
+   - 데이터가 누락되었거나 확인되지 않은 경우 추정해서 채우지 말고 `null` 또는 `N/A`로 명확히 표시한다.
+3. **지표 확장성 보장:**
+   - 지표나 펀더멘털 항목은 사용자가 나중에 얼마든지 추가할 수 있도록 모듈식 함수 및 확장 가능한 스키마 구조로 작성한다.
+4. **토큰 절약 최적화:**
+   - 장황한 개념 설명이나 아키텍처 재설명을 생략하고, `src/` 내의 특정 대상 파일에 필요한 완성형 코드만 바로 작성한다.
 
-## Tech Stack
-- Language: Python 3.11+
-- Data: `pandas`, `yfinance` (or financial APIs), `pydantic` (schema validation)
-- UI/Dashboard: `streamlit` (lightweight, zero boilerplate)
-- Tests: `pytest`
+## 기술 스택
+- 언어: Python 3.11+
+- 데이터 수집/처리: `pandas`, `yfinance`, `pydantic` (데이터 스키마 검증)
+- 대시보드 UI: `streamlit`
+- 테스트: `pytest`

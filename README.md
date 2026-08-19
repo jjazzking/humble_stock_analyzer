@@ -26,8 +26,8 @@
 ```text
 ai-stock-dashboard/
 ├── CLAUDE.md                 # AI 어시스턴트용 규칙 및 제약사항
-├── README.md                 # 프로젝트 소개 및 가이드
-├── requirements.txt          # 의존성 패키지 목록
+├── README.md                 # 프로젝트 소개 및 안내서
+├── requirements.txt          # 의존성 라이브러리 목록
 ├── config/
 │   └── watchlist.yaml        # 모니터링 대상 종목(Watchlist) 설정
 ├── docs/
@@ -41,3 +41,20 @@ ai-stock-dashboard/
 │   └── dashboard/
 │       └── app.py            # Streamlit 대시보드 UI
 └── tests/                    # 데이터 무결성 검증 테스트
+```
+
+---
+
+## 🚀 빠른 시작
+
+### 1. 가상환경 설정 및 패키지 설치
+```bash
+python -m venv .venv
+source .venv/bin/activate  # Windows 환경: .venv\Scriptsctivate
+pip install -r requirements.txt
+```
+
+### 2. 대시보드 실행
+```bash
+streamlit run src/dashboard/app.py
+```

@@ -1,4 +1,4 @@
-# Python / Virtualenv
+# 파이썬 가상환경 및 캐시
 __pycache__/
 *.py[cod]
 *$py.class
@@ -8,13 +8,13 @@ env/
 .env
 .env.local
 
-# Data storage (keep raw/processed local, only schema in git)
+# 로컬 데이터 (스키마만 깃에 남기고 원본/가공 데이터는 제외)
 data/raw/*
 data/processed/*
 !data/raw/.gitkeep
 !data/processed/.gitkeep
 
-# IDE & OS
+# IDE 및 OS 설정 파일
 .DS_Store
 .vscode/
 .idea/
