@@ -28,6 +28,7 @@ ai-stock-dashboard/
 ├── CLAUDE.md                 # AI 어시스턴트용 규칙 및 제약사항
 ├── README.md                 # 프로젝트 소개 및 안내서
 ├── requirements.txt          # 의존성 라이브러리 목록
+├── pyproject.toml            # pytest import 경로 설정
 ├── config/
 │   └── watchlist.yaml        # 모니터링 대상 종목(Watchlist) 설정
 ├── docs/
@@ -50,7 +51,7 @@ ai-stock-dashboard/
 ### 1. 가상환경 설정 및 패키지 설치
 ```bash
 python -m venv .venv
-source .venv/bin/activate  # Windows 환경: .venv\Scriptsctivate
+source .venv/bin/activate  # Windows 환경: .venv\Scripts\activate
 pip install -r requirements.txt
 ```
 

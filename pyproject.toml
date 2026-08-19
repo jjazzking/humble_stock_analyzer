@@ -1,0 +1,4 @@
+[tool.pytest.ini_options]
+# 프로젝트 루트를 import 경로에 추가해 tests/에서 src.* 를 바로 import 할 수 있게 한다.
+pythonpath = ["."]
+testpaths = ["tests"]
