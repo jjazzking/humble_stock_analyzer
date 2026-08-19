@@ -1,4 +1,14 @@
-import streamlit as st
+import sys
+from pathlib import Path
+
+# streamlit run 실행 시 sys.path에는 이 스크립트의 폴더(src/dashboard)만 등록되므로
+# 프로젝트 루트를 직접 추가한다. src/ 자체가 아닌 루트를 추가해야 src.types가
+# 표준 라이브러리 types 모듈을 가리는 문제를 피할 수 있다.
+_PROJECT_ROOT = Path(__file__).resolve().parents[2]
+if str(_PROJECT_ROOT) not in sys.path:
+    sys.path.insert(0, str(_PROJECT_ROOT))
+
+import streamlit as st  # noqa: E402
 
 st.set_page_config(page_title="AI 우량주 눌림목 대시보드", layout="wide")
 

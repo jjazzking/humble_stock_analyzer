@@ -40,6 +40,15 @@ EOF
 touch data/raw/.gitkeep
 touch data/processed/.gitkeep
 
+# 2-1. 파이썬 패키지 초기화 파일 생성
+# src/ 하위를 정식 패키지로 만들어야 tests 및 대시보드에서 src.types.stock 을 import 할 수 있다.
+printf '"""AI 우량주 눌림목 분할매수 대시보드 패키지."""\n' > src/__init__.py
+printf '"""데이터 스키마(Pydantic 모델) 패키지."""\n' > src/types/__init__.py
+printf '"""[1단계] 펀더멘털 및 내러티브 데이터 수집기 패키지."""\n' > src/collectors/__init__.py
+printf '"""[2단계] 기술적 지표 및 눌림목 계산 패키지."""\n' > src/indicators/__init__.py
+printf '"""Streamlit 대시보드 UI 패키지."""\n' > src/dashboard/__init__.py
+printf '"""데이터 무결성 검증 테스트 패키지."""\n' > tests/__init__.py
+
 # 3. CLAUDE.md (AI 핵심 행동 지침 및 토큰 절약 규칙)
 cat << 'EOF' > CLAUDE.md
 # AI 주식 눌림목 분할매수 대시보드 개발 규칙
@@ -100,6 +109,7 @@ ai-stock-dashboard/
 ├── CLAUDE.md                 # AI 어시스턴트용 규칙 및 제약사항
 ├── README.md                 # 프로젝트 소개 및 안내서
 ├── requirements.txt          # 의존성 라이브러리 목록
+├── pyproject.toml            # pytest import 경로 설정
 ├── config/
 │   └── watchlist.yaml        # 모니터링 대상 종목(Watchlist) 설정
 ├── docs/
@@ -122,7 +132,7 @@ ai-stock-dashboard/
 ### 1. 가상환경 설정 및 패키지 설치
 ```bash
 python -m venv .venv
-source .venv/bin/activate  # Windows 환경: .venv\Scriptsctivate
+source .venv/bin/activate  # Windows 환경: .venv\Scripts\activate
 pip install -r requirements.txt
 ```
 
@@ -249,7 +259,17 @@ EOF
 
 # 9. src/dashboard/app.py (대시보드 UI)
 cat << 'EOF' > src/dashboard/app.py
-import streamlit as st
+import sys
+from pathlib import Path
+
+# streamlit run 실행 시 sys.path에는 이 스크립트의 폴더(src/dashboard)만 등록되므로
+# 프로젝트 루트를 직접 추가한다. src/ 자체가 아닌 루트를 추가해야 src.types가
+# 표준 라이브러리 types 모듈을 가리는 문제를 피할 수 있다.
+_PROJECT_ROOT = Path(__file__).resolve().parents[2]
+if str(_PROJECT_ROOT) not in sys.path:
+    sys.path.insert(0, str(_PROJECT_ROOT))
+
+import streamlit as st  # noqa: E402
 
 st.set_page_config(page_title="AI 우량주 눌림목 대시보드", layout="wide")
 
@@ -275,6 +295,14 @@ pydantic>=2.0.0
 streamlit>=1.30.0
 pyyaml>=6.0
 pytest>=8.0.0
+EOF
+
+# 11. pyproject.toml (pytest 경로 설정)
+cat << 'EOF' > pyproject.toml
+[tool.pytest.ini_options]
+# 프로젝트 루트를 import 경로에 추가해 tests/에서 src.* 를 바로 import 할 수 있게 한다.
+pythonpath = ["."]
+testpaths = ["tests"]
 EOF
 
 echo "한국어 주석 및 문서가 포함된 초기 저장소 구조 생성이 완료되었습니다."
