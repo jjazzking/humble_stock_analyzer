@@ -1,0 +1,17 @@
+# Target Watchlist: AI Infra, Semi, Cloud & Core Blue-chips
+tickers:
+  - symbol: NVDA
+    name: NVIDIA
+    category: AI Chips / Hardware
+  - symbol: MSFT
+    name: Microsoft
+    category: Cloud / Software
+  - symbol: GOOGL
+    name: Alphabet
+    category: Model / Platform
+  - symbol: TSM
+    name: TSMC
+    category: Foundry
+  - symbol: ASML
+    name: ASML
+    category: Equipment
