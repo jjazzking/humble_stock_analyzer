@@ -31,6 +31,52 @@ class TechnicalData(BaseModel):
     rsi_14: Optional[float] = Field(None, description="14일 기준 RSI")
     # 향후 원하는 기술적 지표(볼린저 밴드, 거래량 등)를 이곳에 손쉽게 추가 가능
 
+class AnalystRatingDistribution(BaseModel):
+    """증권사 투자의견 분포 (특정 기준월의 의견별 애널리스트 수)"""
+    period: Optional[str] = Field(None, description="집계 기준 구간 (예: 0m=당월, -1m=한달 전)")
+    strong_buy: Optional[int] = Field(None, description="적극 매수 의견 수")
+    buy: Optional[int] = Field(None, description="매수 의견 수")
+    hold: Optional[int] = Field(None, description="중립 의견 수")
+    sell: Optional[int] = Field(None, description="매도 의견 수")
+    strong_sell: Optional[int] = Field(None, description="적극 매도 의견 수")
+
+
+class AnalystAction(BaseModel):
+    """증권사 투자의견 변경 이력 1건"""
+    action_date: Optional[date] = Field(None, description="의견 변경 공표일")
+    firm: Optional[str] = Field(None, description="증권사명")
+    from_grade: Optional[str] = Field(None, description="변경 전 투자의견")
+    to_grade: Optional[str] = Field(None, description="변경 후 투자의견")
+    action: Optional[str] = Field(None, description="변경 유형 (up/down/init/main/reit 등 원문 그대로)")
+
+
+class AnalystReportData(BaseModel):
+    """증권사 리포트 컨센서스 규격
+
+    주의: 여기 담기는 목표주가/투자의견은 외부 기관이 공표한 값을 가공 없이
+    그대로 전달하는 것이다. 이 값들을 재료로 자체 점수/등급을 파생시키지 않는다.
+    """
+    symbol: str
+    target_price_mean: Optional[float] = Field(None, description="목표주가 평균")
+    target_price_high: Optional[float] = Field(None, description="목표주가 최고")
+    target_price_low: Optional[float] = Field(None, description="목표주가 최저")
+    target_price_median: Optional[float] = Field(None, description="목표주가 중앙값")
+    analyst_count: Optional[int] = Field(None, description="커버리지 애널리스트 수")
+    recommendation_mean: Optional[float] = Field(
+        None, description="투자의견 평균 (출처 제공값. 1=적극매수 ~ 5=적극매도)"
+    )
+    recommendation_key: Optional[str] = Field(None, description="투자의견 요약 문자열 (출처 제공값)")
+    rating_distribution: Optional[AnalystRatingDistribution] = Field(
+        None, description="최신 기준월의 투자의견 분포"
+    )
+    recent_actions: List[AnalystAction] = Field(
+        default_factory=list, description="최근 투자의견 변경 이력 (최신순)"
+    )
+    source: Optional[str] = Field(None, description="데이터 출처 표기")
+    last_updated: Optional[date] = Field(None, description="수집 일자")
+    # 향후 실적 추정치(EPS/매출 컨센서스) 등을 이곳에 손쉽게 추가 가능
+
+
 class StockRecord(BaseModel):
     """개별 종목 종합 레코드"""
     symbol: str
@@ -38,3 +84,6 @@ class StockRecord(BaseModel):
     fundamentals: FundamentalData
     narrative: NarrativeData
     technicals: TechnicalData
+    analyst_report: Optional[AnalystReportData] = Field(
+        None, description="증권사 리포트 컨센서스 (미수집 시 None)"
+    )
