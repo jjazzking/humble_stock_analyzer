@@ -1,7 +1,9 @@
 """실데이터 수집 점검 스크립트.
 
 네트워크가 열린 환경에서 1회 실행해 원천 키 매핑이 실제로 맞는지 확인한다.
-실행: python -m src.collectors.smoke [SYMBOL ...]
+실행 (둘 중 아무거나):
+  python src/collectors/smoke.py [SYMBOL ...]   # 실행 위치 무관
+  python -m src.collectors.smoke [SYMBOL ...]   # 프로젝트 루트에서만
 
 값이 None으로 나오면 두 경우를 구분해서 봐야 한다.
   - 원천에 그 항목이 원래 없음  -> 정상
@@ -11,7 +13,15 @@
 from __future__ import annotations
 
 import sys
+from pathlib import Path
 from typing import List
+
+# 파일 경로로 직접 실행(python src/collectors/smoke.py)해도 src 패키지를 찾도록
+# 프로젝트 루트를 등록한다. src/ 가 아닌 루트를 넣어야 src.types 가 표준
+# 라이브러리 types 를 가리지 않는다.
+_PROJECT_ROOT = Path(__file__).resolve().parents[2]
+if str(_PROJECT_ROOT) not in sys.path:
+    sys.path.insert(0, str(_PROJECT_ROOT))
 
 from src.collectors.analyst_reports import collect_analyst_reports_many
 from src.collectors.fundamentals import collect_fundamentals_many

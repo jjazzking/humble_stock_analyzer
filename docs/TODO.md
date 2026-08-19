@@ -14,7 +14,7 @@
     - 목표주가(평균/최고/최저/중앙), 투자의견 분포, 커버리지 수, 의견 변경 이력
   - [x] 데이터 수집 정합성 테스트 (`tests/test_collectors.py`)
   - [ ] **실데이터 검증** — 개발 환경 네트워크 정책으로 Yahoo Finance 차단 상태.
-        로컬에서 `python -m src.collectors.smoke` 등으로 실호출 1회 확인 필요
+        로컬에서 `python src/collectors/smoke.py` 로 실호출 1회 확인 필요
   - [ ] 실적 추정치(EPS/매출 컨센서스) 수집 항목 추가
   - [ ] 내러티브 수집기 작성 (`src/collectors/narrative.py`)
         ※ 리포트 원문은 저작권상 자동 수집하지 않고 수기 입력
